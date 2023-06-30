@@ -3,7 +3,6 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity fsm12 is
-  generic(N: integer := 8);
   Port (
     clk: in std_logic;
     enable: in std_logic;
