@@ -34,15 +34,13 @@ entity mt_top is
 end mt_top;
 
 architecture arch of mt_top is
-constant N : integer := 49999999; 
 signal enable : std_logic;
-signal divide_clk : integer range 0 to N;
 signal result : std_logic_vector (3 downto 0);
 signal car_enter, car_exit : std_logic;
 signal db_level_1, db_level_2 : std_logic;
 begin
 
-    _fsm_: entity work.fsm13(arch)
+    fsm: entity work.fsm13(arch)
     port map(
         clk => clk,
         a => db_level_1, 
@@ -52,7 +50,7 @@ begin
         enable => enable
     );
 
-    _counter_: entity work.counter(arch)
+    counter: entity work.counter(arch)
     port map (
         clk => clk,
         sum => car_enter,
@@ -60,23 +58,21 @@ begin
         q => result
     );
 
-    _db1_ : entity work.db_fsm(arch)
+    db1 : entity work.db_fsm(arch)
       port map(
          clk   => clk,
-         reset => '0',
          sw    => btn(3),
          db    => db_level_1
       );
     
-    _db2_ : entity work.db_fsm(arch)
+    db2 : entity work.db_fsm(arch)
       port map(
          clk   => clk,
-         reset => '0',
          sw    => btn(1),
          db    => db_level_2
       );
 
-    _display_: entity work.disp_hex_mux
+    display: entity work.disp_hex_mux
     port map(
       clk => clk,
       reset => '0',
@@ -89,16 +85,6 @@ begin
       sseg => sseg
     );
     
-    enable <= '1' when divide_clk = N else '0';
-    
-    PROCESS (clk)
-            BEGIN
-                IF (clk'EVENT AND clk='1') THEN
-                    divide_clk <= divide_clk+1;
-                    IF divide_clk = N THEN
-                        divide_clk <= 0;
-                    END IF;
-                END IF;
-         END PROCESS;
+    enable <= '1';
 
 end arch;

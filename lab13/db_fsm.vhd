@@ -4,7 +4,6 @@ use ieee.numeric_std.all;
 entity db_fsm is
    port(
       clk   : in std_logic;
-      reset : in std_logic;
       sw    : in std_logic;
       db    : out std_logic
    );
@@ -43,9 +42,7 @@ begin
    -- state register
    process(clk,reset)
    begin
-      if (reset='1') then
-         state_reg <= zero;
-      elsif (clk'event and clk='1') then
+      if (clk'event and clk='1') then
          state_reg <= state_next;
       end if;
    end process;
