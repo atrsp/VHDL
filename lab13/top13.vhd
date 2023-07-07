@@ -60,7 +60,7 @@ begin
         q => result
     );
 
-    db_1 : entity work.db_fsm(arch)
+    _db1_ : entity work.db_fsm(arch)
       port map(
          clk   => clk,
          reset => '0',
@@ -68,7 +68,7 @@ begin
          db    => db_level_1
       );
     
-    db_2 : entity work.db_fsm(arch)
+    _db2_ : entity work.db_fsm(arch)
       port map(
          clk   => clk,
          reset => '0',
@@ -76,7 +76,7 @@ begin
          db    => db_level_2
       );
 
-    display: entity work.disp_hex_mux
+    _display_: entity work.disp_hex_mux
     port map(
       clk => clk,
       reset => '0',
