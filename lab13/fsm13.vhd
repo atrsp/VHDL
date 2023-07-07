@@ -2,16 +2,16 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
-entity fsm12 is
+entity fsm13 is
   Port (
     clk: in std_logic;
     enable: in std_logic;
     a, b: in std_logic;
     car_enter, car_exit: out std_logic
    );
-end fsm12;
+end fsm13;
 
-architecture arch of fsm12 is
+architecture arch of fsm13 is
     type eg_state_type is (vazio, e1, e2, e3, entrou, es1, es2, es3, saiu);
     signal state_reg, state_next: eg_state_type;
    

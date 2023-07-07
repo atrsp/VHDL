@@ -37,16 +37,16 @@ architecture arch of mt_top is
 constant N : integer := 49999999; 
 signal enable : std_logic;
 signal divide_clk : integer range 0 to N;
-signal result : std_logic_vector (31 downto 0);
+signal result : std_logic_vector (3 downto 0);
 signal car_enter, car_exit : std_logic;
 signal db_level_1, db_level_2 : std_logic;
 begin
 
-    _fsm_: entity work.fsm12(arch)
+    _fsm_: entity work.fsm13(arch)
     port map(
         clk => clk,
-        a => btn(3), -- aqui, vamos substituir o btn pela saida do debounce, e o btn vai entrar na arquitetura do debounce
-        b => btn(1), -- aqui, vamos substituir o btn pela saida do debounce, e o btn vai entrar na arquitetura do debounce
+        a => db_level_1, 
+        b => db_level_2, 
         car_enter => car_enter, 
         car_exit => car_exit, 
         enable => enable
@@ -76,6 +76,19 @@ begin
          db    => db_level_2
       );
 
+    display: entity work.disp_hex_mux
+    port map(
+      clk => clk,
+      reset => '0',
+      hex3 => "0000",
+      hex2 => "0000",
+      hex1 => "0000",
+      hex0 => result,
+      dp_in => "1111",
+      an => an,
+      sseg => sseg
+    );
+    
     enable <= '1' when divide_clk = N else '0';
     
     PROCESS (clk)

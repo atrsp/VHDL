@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 entity counter is
-   generic(N : integer := 32);
+   generic(N : integer := 4);
    port(
       clk : in  std_logic;
       sum : in std_logic; 
@@ -17,7 +17,7 @@ architecture arch of counter is
    signal r_next : unsigned(N-1 downto 0);
 begin
 
-   -- register
+   -- register (reset??)
    process(clk)
    begin
       if (clk'event and clk='1') then
@@ -26,7 +26,7 @@ begin
    end process;
    
    -- next-state logic
-   process (sum, subt, r_reg)
+   process (sum, subt) --r_reg?
    begin
       if sum = '1' then
          r_next <= r_reg + 1;
